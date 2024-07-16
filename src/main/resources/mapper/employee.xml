@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hr.mapper.EmployeeMapper">
+    <insert id="insertEmployee">
+        insert into employee (first_name, last_name, gender, phone, email, birth, hire_date,
+        zipcode, addr, addr_detail, addr_etc, department_id, salary)
+        values ( #{first_name}, #{last_name}, #{gender}, #{phone}, #{email}, #{birth},
+        #{hire_date}, #{zipcode}, #{addr}, #{addr_detail}, #{addr_etc}, #{department_id}, #{salary})
+    </insert>
+
+    <select id="getEmployeeList">
+        <![CDATA[
+        select * from employee
+        where
+        ]]>
+        <if test="lastName != null">
+            <![CDATA[
+            and last_name = #{lastName}
+            ]]>
+        </if>
+        <if test="gender != null">
+            <![CDATA[
+            and gender = #{gender}
+            ]]>
+        </if>
+        <if test="birth != null">
+            <![CDATA[
+            and birth = #{birth}
+            ]]>
+        </if>
+        <if test="departmentId != null">
+            <![CDATA[
+            and department_id = #{departmentId}
+            ]]>
+        </if>
+        <if test="isEmployee != null">
+            <![CDATA[
+            AND is_employee = #{isEmployee}
+            ]]>
+        </if>
+        <![CDATA[
+        ORDER BY employee_id DESC
+        ]]>
+    </select>
+
+    <update id="updateEmployee">
+        update employee set phone = #{phone}, email =#{email}, zipcode = #{zipcode},
+        addr = #{addr}, addr_detail=#{addr_detail}, addr_etc =#{addr_etc}, salary =#{salary},
+        is_employee = #{is_employee}
+    </update>
+    <delete id="deleteEmployee">
+        delete from employee where employee_id=#{employee_id}
+    </delete>
+</mapper>
