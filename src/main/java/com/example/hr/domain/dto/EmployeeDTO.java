@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -20,13 +21,14 @@ public class EmployeeDTO {
     private String email;
     private Date birth;
     private Date hireDate;
+    private int salary;
     private String zipcode;
     private String addr;
     private String addrDetail;
     private String addrEtc;
     private Long departmentId;
-    private int salary;
     private isEmployee isEmployee;
+    private List<PayrollDTO> payrolls;
 
 }
 

@@ -2,19 +2,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/db
+    url: jdbc:mysql://127.0.0.1:3306/hr
     username: root
     password: wkfskrk1!
-  spring:
-    mvc:
-      view:
-        prefix: /WEB-INF/views/
-        suffix: .jsp
-      jsp:
-        enabled: true
-      jstl:
-        enabled: true
-  mybatis:
-    config-location: classpath:/mybatis-config.xml
-    mapper-locations: classpath:/mapper/**/*.xml
-    type-aliases-package: com.example.hr.domain.dto
+mybatis:
+  #mybatis가 최상단에 위치해야합니다.....
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.example.hr.domain.dto

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hr.mapper.AttendanceMapper">
+    <insert id="insertCheckIn">
+        insert into attendance(employee_id) values(#{employeeId})
+    </insert>
+
+    <select id="getAttendance">
+        select * from Attendance
+    </select>
+
+    <select id="getAttendanceByEmployeeId">
+        <![CDATA[
+        select a.attendance_id, a.employee_id, a.date, a.check_in, a.check_out,
+		e.employee_id,e.first_name, e.last_name, e.gender,
+		e.phone, e.email, e.birth, e.hire_date,
+		e.department_id, e.salary, e.is_employee,
+		d.department_name, d.d_explain
+	    from attendance a
+	    join employee e on a.employee_id = e.employee_id
+	    join department d on e.department_id = d.department_id
+	    where a.employee_id = #{employeeId}
+        ]]>
+    </select>
+
+    <update id="insertCheckOut">
+        update attendance
+        set check_out = now()
+        where employee_id = #{employeeId} and check_out is null
+    </update>
+
+    <update id="updateAttendance">
+        update attendance
+        set date = #{date}, check_in = #{date}, check_out=#{checkOut}
+    </update>
+    <delete id="deleteAttendanceById">
+        delete
+    </delete>
+</mapper>

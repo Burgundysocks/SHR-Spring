@@ -6,7 +6,9 @@ import java.util.Map;
 
 public interface EmployeeService {
 
-    boolean addEmployee(EmployeeDTO employee);
+    EmployeeDTO addEmployee(EmployeeDTO employee);
+
+    EmployeeDTO getEmployeeById(Long employeeId);
 
     List<EmployeeDTO> getEmployeeList(Map<String, Object> params);
 

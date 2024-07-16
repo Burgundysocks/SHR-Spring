@@ -7,8 +7,9 @@ import java.util.Map;
 
 public interface PayrollService {
 
-    boolean salaryPay(PayrollDTO pay);
+    PayrollDTO salaryPay(PayrollDTO pay);
 
+    List<PayrollDTO> listByEmployeeId(Long employeeId);
     List<PayrollDTO> listSalaryPay(Map<String, Object> params);
 
     boolean updateSalaryPay(PayrollDTO pay);

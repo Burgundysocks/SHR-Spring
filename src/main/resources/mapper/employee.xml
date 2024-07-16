@@ -3,17 +3,44 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hr.mapper.EmployeeMapper">
+
+    <resultMap id="EmployeeResultMap" type="com.example.hr.domain.dto.EmployeeDTO">
+        <id property="employeeId" column="employee_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="birth" column="birth"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="zipcode" column="zipcode"/>
+        <result property="addr" column="addr"/>
+        <result property="addrDetail" column="addr_detail"/>
+        <result property="addrEtc" column="addr_etc"/>
+        <result property="departmentId" column="department_id"/>
+        <result property="isEmployee" column="is_employee"/>
+        <collection property="payrolls" ofType="com.example.hr.domain.dto.PayrollDTO">
+            <id property="payrollId" column="payroll_id"/>
+            <result property="employeeId" column="employee_id"/>
+            <result property="salary" column="payroll_salary"/>
+            <result property="payDay" column="pay_day"/>
+        </collection>
+    </resultMap>
+
+
     <insert id="insertEmployee">
-        insert into employee (first_name, last_name, gender, phone, email, birth, hire_date,
+        insert into employee (user_id, first_name, last_name, gender, phone, email, birth, hire_date,
         zipcode, addr, addr_detail, addr_etc, department_id, salary)
-        values ( #{first_name}, #{last_name}, #{gender}, #{phone}, #{email}, #{birth},
-        #{hire_date}, #{zipcode}, #{addr}, #{addr_detail}, #{addr_etc}, #{department_id}, #{salary})
+        values ( #{userId}, #{firstName}, #{lastName}, #{gender}, #{phone}, #{email}, #{birth},
+        #{hireDate}, #{zipcode}, #{addr}, #{addrDetail}, #{addrEtc}, #{departmentId}, #{salary})
     </insert>
 
     <select id="getEmployeeList">
         <![CDATA[
         select * from employee
         where
+        employee_id > 0
         ]]>
         <if test="lastName != null">
             <![CDATA[
@@ -23,11 +50,6 @@
         <if test="gender != null">
             <![CDATA[
             and gender = #{gender}
-            ]]>
-        </if>
-        <if test="birth != null">
-            <![CDATA[
-            and birth = #{birth}
             ]]>
         </if>
         <if test="departmentId != null">
@@ -41,16 +63,26 @@
             ]]>
         </if>
         <![CDATA[
-        ORDER BY employee_id DESC
+        order by employee_id desc
         ]]>
+    </select>
+
+    <select id="getEmployeeById" resultMap="EmployeeResultMap">
+        select e.employee_id, e.user_id, e.first_name, e.last_name, e.gender, e.phone, e.email,
+        e.birth, e.hire_date, e.zipcode, e.addr, e.addr_detail, e.addr_etc,
+        e.department_id, e.is_employee, p.salary as payroll_salary, p.pay_day
+        from employee e
+        join payroll p on e.employee_id = p.employee_id
+        where e.employee_id = #{employeeId}
     </select>
 
     <update id="updateEmployee">
         update employee set phone = #{phone}, email =#{email}, zipcode = #{zipcode},
-        addr = #{addr}, addr_detail=#{addr_detail}, addr_etc =#{addr_etc}, salary =#{salary},
-        is_employee = #{is_employee}
+        addr = #{addr}, addr_detail=#{addrDetail}, addr_etc =#{addrEtc}, salary =#{salary},
+        is_employee = #{isEmployee}
+        where employee_id = #{employeeId}
     </update>
     <delete id="deleteEmployee">
-        delete from employee where employee_id=#{employee_id}
+        delete from employee where employee_id=#{employeeId}
     </delete>
 </mapper>

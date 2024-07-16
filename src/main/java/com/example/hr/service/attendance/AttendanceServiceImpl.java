@@ -15,9 +15,21 @@ public class AttendanceServiceImpl implements AttendanceService {
     private AttendanceMapper amapper;
 
     @Override
-    public boolean checkIn(AttendanceDTO attendance) {
-        return amapper.insertCheckIn(attendance) == 1;
+    public AttendanceDTO checkIn(AttendanceDTO attendance) {
+        int result = amapper.insertCheckIn(attendance);
+        if (result == 1) {
+            List<AttendanceDTO> attendanceList = amapper.getAttendanceByEmployeeId(attendance.getEmployeeId());
+            if (!attendanceList.isEmpty()) {
+                return attendanceList.get(0);
+            } else {
+
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
+
 
     @Override
     public boolean checkOut(AttendanceDTO attendance) {
@@ -27,6 +39,11 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public List<AttendanceDTO> getAttendance(Map<String, Object> params) {
         return amapper.getAttendance(params);
+    }
+
+    @Override
+    public List<AttendanceDTO> getAttendanceByEmployeeId(Long employeeId) {
+        return amapper.getAttendanceByEmployeeId(employeeId);
     }
 
 

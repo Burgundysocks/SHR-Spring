@@ -14,9 +14,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper emapper;
 
     @Override
-    public boolean addEmployee(EmployeeDTO employee) {
-        return emapper.insertEmployee(employee) == 1;
+    public EmployeeDTO addEmployee(EmployeeDTO employee) {
+        int result = emapper.insertEmployee(employee);
+        if(result == 1){
+            EmployeeDTO addEmployee = emapper.getEmployeeById(employee.getEmployeeId());
+            if(addEmployee != null){
+                return addEmployee;
+            } else {
+                return null;
+            }
+        }
+        return null;
     }
+
+    @Override
+    public EmployeeDTO getEmployeeById(Long employeeId) {
+        return emapper.getEmployeeById(employeeId);
+    }
+
 
     @Override
     public List<EmployeeDTO> getEmployeeList(Map<String, Object> params) {

@@ -7,11 +7,11 @@ import java.util.Map;
 
 public interface AttendanceService {
 
-    boolean checkIn(AttendanceDTO attendance);
+    AttendanceDTO checkIn(AttendanceDTO attendance);
     boolean checkOut(AttendanceDTO attendance); //update
 
     List<AttendanceDTO> getAttendance(Map<String, Object> params);
-
+    List<AttendanceDTO> getAttendanceByEmployeeId(Long employeeId);
     boolean update(AttendanceDTO attendance);
 
     boolean delete(long attendanceId);

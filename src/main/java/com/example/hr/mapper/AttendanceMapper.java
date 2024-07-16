@@ -13,6 +13,7 @@ public interface AttendanceMapper {
 
     // R
     List<AttendanceDTO> getAttendance(Map<String, Object> params);
+    List<AttendanceDTO> getAttendanceByEmployeeId(Long employeeId);
 
     // U
     int insertCheckOut(AttendanceDTO attendance);

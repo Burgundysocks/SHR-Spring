@@ -16,9 +16,27 @@ public class PayrollServiceImpl implements PayrollService {
     private PayrollMapper pmapper;
 
     @Override
-    public boolean salaryPay(PayrollDTO pay) {
-        return pmapper.insertPayroll(pay) == 1;
+    public PayrollDTO salaryPay(PayrollDTO pay) {
+        int result = pmapper.insertPayroll(pay);
+        if(result == 1){
+            List<PayrollDTO> payList = pmapper.getPayByEmployeeId(pay.getEmployeeId());
+            if(!payList.isEmpty()){
+                return payList.get(0);
+            }
+            else{
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
     }
+
+    @Override
+    public List<PayrollDTO> listByEmployeeId(Long employeeId) {
+        return pmapper.getPayByEmployeeId(employeeId);
+    }
+
 
     @Override
     public List<PayrollDTO> listSalaryPay(Map<String, Object> params) {

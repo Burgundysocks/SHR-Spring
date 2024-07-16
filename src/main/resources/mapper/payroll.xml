@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hr.mapper.PayrollMapper">
+    <insert id="insertPayroll">
+        insert into payroll (employee_id, salary, pay_day)
+        values (#{employeeId}, #{salary}, #{payDay})
+    </insert>
+
+    <select id="getPayroll">
+        <![CDATA[
+    select e.employee_id, e.first_name, e.last_name, e.gender, e.phone, e.email,
+           e.hire_date, e.department_id, e.salary as employee_salary,
+           p.payroll_id, p.salary as payroll_salary, p.pay_day
+    from employee e
+    join payroll p on e.employee_id = p.employee_id
+    where
+    e.employee_id > 0
+    ]]>
+        <if test="departmentId != null">
+            <![CDATA[
+        and e.department_id = #{departmentId}
+        ]]>
+        </if>
+    </select>
+
+    <select id="getPayByEmployeeId">
+    select e.employee_id, e.first_name, e.last_name, e.gender, e.phone, e.email,
+           e.hire_date, e.department_id, e.salary as employee_salary,
+           p.payroll_id, p.salary as payroll_salary, p.pay_day
+    from employee e
+    join payroll p on e.employee_id = p.employee_id
+    where
+    e.employee_id = #{employeeId}
+    </select>
+
+    <update id="updatePayroll">
+        update payroll
+        set salary = #{salary}, pay_day = #{payDay}
+        where employee_id = #{employeeId}
+    </update>
+
+    <delete id="deletePayrollById">
+        delete from payroll
+        where employee_id = #{employeeId}
+    </delete>
+</mapper>

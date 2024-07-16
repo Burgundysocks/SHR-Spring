@@ -12,6 +12,7 @@ public interface EmployeeMapper {
     //C
     int insertEmployee(EmployeeDTO employee);
     //R
+    EmployeeDTO getEmployeeById(Long employeeId);
     List<EmployeeDTO> getEmployeeList(Map<String, Object> params);
     //U
     int updateEmployee(EmployeeDTO employee);

@@ -11,20 +11,29 @@ public class UserServiceImpl implements UserService{
     private UserMapper umapper;
 
     @Override
-    public boolean join(UserDTO user) {
-        return umapper.insertUser(user) == 1;
+    public UserDTO join(UserDTO user) {
+        if(umapper.insertUser(user) == 1){
+            return umapper.getUser(user.getUserId());
+        }
+        return null;
     }
 
     @Override
-    public boolean login(String userId, String password) {
+    public UserDTO login(String userId, String password) {
         UserDTO user = umapper.getUser(userId);
         if(user!=null) {
             if(password.equals(user.getPassword())) {
-                return true;
+                return user;
             }
         }
-        return false;
+        return null;
     }
+
+    @Override
+    public UserDTO getUser(String userId) {
+        return umapper.getUser(userId);
+    }
+
 
     @Override
     public boolean update(UserDTO user) {

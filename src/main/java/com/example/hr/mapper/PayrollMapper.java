@@ -11,6 +11,7 @@ public interface PayrollMapper {
     // C
     int insertPayroll(PayrollDTO payroll);
     // R
+    List<PayrollDTO> getPayByEmployeeId(Long employeeId);
     List<PayrollDTO> getPayroll(Map<String, Object> params);
     // U - 필요 시에만 사용
     int updatePayroll(PayrollDTO payroll);
