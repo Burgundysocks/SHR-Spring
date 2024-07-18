@@ -18,7 +18,7 @@ public class PayrollApiController {
     private PayrollService pservice;
 
     @PostMapping(value = "/pay", consumes = "application/json", produces = "application/json;charset=utf-8")
-    public ResponseEntity<PayrollDTO> payroll(@RequestBody PayrollDTO pay) {
+    public ResponseEntity<?> payroll(@RequestBody PayrollDTO pay) {
         PayrollDTO result = pservice.salaryPay(pay);
         if(result != null){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
